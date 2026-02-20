@@ -12,6 +12,13 @@ function triangle(val1, type1, val2, type2) {
         return "Zero or negative input";
     }
 
+    // 2. Умова: різниця між значеннями не більше 10000 разів
+    const ratio = Math.max(val1, val2) / Math.min(val1, val2);
+    if (ratio > 10000) { 
+        console.log("Помилка: занадто велика різниця між значеннями (макс. 10000)");
+        return "failed";
+    }
+
     let a, b, c, alpha, beta;
     const data = { [type1]: val1, [type2]: val2 };
     const types = Object.keys(data);
@@ -22,7 +29,7 @@ function triangle(val1, type1, val2, type2) {
         return "failed";
     }
 
-    // Обчислення
+    // Логіка обчислень
     if (types.includes("leg") && types.includes("hypotenuse")) {
         a = data.leg;
         c = data.hypotenuse;
@@ -64,9 +71,9 @@ function triangle(val1, type1, val2, type2) {
         return "failed";
     }
 
-    // 3. Твоя умова: кут між катетом і гіпотенузою (alpha та beta) не менше 5 градусів
-    if (alpha < 5 || beta < 5 || alpha > 85 || beta > 85) {
-        console.log("Помилка: гострі кути мають бути в діапазоні від 5 до 85 градусів.");
+    // 3. Умова: кути в діапазоні від 0.01 до 89.99 градусів
+    if (alpha < 0.01 || beta < 0.01 || alpha > 89.99 || beta > 89.99) {
+        console.log("Помилка: трикутник занадто деформований (кути мають бути від 0.01° до 89.99°).");
         return "failed";
     }
 
