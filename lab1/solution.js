@@ -86,12 +86,6 @@ function triangle(val1, type1, val2, type2) {
         return "failed";
     }
 
-    // 3. Фінальна перевірка кутів на 0°
-    if (alpha < 0.001 || beta < 0.001) {
-        console.log("Помилка: один із кутів практично дорівнює 0°");
-        return "failed";
-    }
-
     console.log(`a = ${a}`);
     console.log(`b = ${b}`);
     console.log(`c = ${c}`);
