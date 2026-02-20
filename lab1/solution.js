@@ -11,6 +11,13 @@ function triangle(val1, type1, val2, type2) {
         return "Zero or negative input";
     }
 
+    // Перевірка на велику різницю між числами (співвідношення)
+    const ratio = Math.max(val1, val2) / Math.min(val1, val2);
+    if (ratio > 100000) { // Якщо одне число більше за інше у 100 000 разів
+        console.log("Помилка: занадто велика різниця між значеннями");
+        return "failed";
+    }
+    
     let a, b, c, alpha, beta;
 
     const data = { [type1]: val1, [type2]: val2 };
