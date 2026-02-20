@@ -12,13 +12,6 @@ function triangle(val1, type1, val2, type2) {
         return "Zero or negative input";
     }
 
-    // 2. Твоя умова: різниця між значеннями не більше 10000 разів
-    const ratio = Math.max(val1, val2) / Math.min(val1, val2);
-    if (ratio > 10000) { 
-        console.log("Помилка: занадто велика різниця між значеннями (макс. 10000)");
-        return "failed";
-    }
-
     let a, b, c, alpha, beta;
     const data = { [type1]: val1, [type2]: val2 };
     const types = Object.keys(data);
