@@ -1,8 +1,8 @@
 var car1 = new Object();
         car1.color = "Red";
-        car1.maxSpeed = 220;
+        car1.maxSpeed = 140;
         car1.driver = {
-            name: "Твоє Прізвище та Ім'я",
+            name: "Сєроух Варвара",
             category: "C",
             "personal limitations": "No driving at night"
         };
@@ -11,9 +11,9 @@ var car1 = new Object();
 
         var car2 = {
             color: "Blue",
-            maxSpeed: 190,
+            maxSpeed: 180,
             driver: {
-                name: "Твоє Прізвище та Ім'я",
+                name: "Сєроух Варвара",
                 category: "B",
                 "personal limitations": null
             },
@@ -62,8 +62,8 @@ var car1 = new Object();
         var truck1 = new Truck("White", 8000, 70, "MAN", "TGX");
         var truck2 = new Truck("Yellow", 5500, 85, "Mercedes", "Actros");
 
-        truck1.AssignDriver("Олександр Іванов", true, 5);
-        truck2.AssignDriver("Дмитро Петренко", false, 2);
+        truck1.AssignDriver("Сєроух Варвара", true, 5);
+        truck2.AssignDriver("Сєроух Варвара", false, 2);
 
         console.log("--- Перевірка Кроку 2 ---");
         truck1.trip();
@@ -71,7 +71,7 @@ var car1 = new Object();
 
 class Square {
     constructor(a) {
-        this.a = a; // сторона квадрата [cite: 55]
+        this.a = a; 
     }
 
     static help() {
@@ -79,26 +79,26 @@ class Square {
     }
 
     length() {
-        console.log("Сума довжин сторін (Периметр): " + (4 * this.a)); // [cite: 59]
+        console.log("Сума довжин сторін (Периметр): " + (4 * this.a)); 
     }
 
     square() {
-        console.log("Площа: " + (this.a * this.a)); // [cite: 60]
+        console.log("Площа: " + (this.a * this.a)); 
     }
 
     info() {
         console.log(`Квадрат:
-        - Сторони: 4 по ${this.a} [cite: 62]
-        - Кути: 4 по 90° [cite: 63]
-        - Периметр: ${4 * this.a} [cite: 64]
-        - Площа: ${this.a * this.a} [cite: 65]`);
+        - Сторони: 4 по ${this.a} 
+        - Кути: 4 по 90° 
+        - Периметр: ${4 * this.a} 
+        - Площа: ${this.a * this.a}`);
     }
 }
 
 class Rectangle extends Square {
     constructor(a, b) {
-        super(a); // викликаємо конструктор батька [cite: 16]
-        this.b = b; // ширина прямокутника [cite: 68]
+        super(a); 
+        this.b = b; 
     }
 
     static help() {
@@ -125,12 +125,16 @@ class Rectangle extends Square {
 class Rhombus extends Square {
     constructor(a, alpha, beta) {
         super(a);
-        this.alpha = alpha; // тупий кут [cite: 77]
-        this.beta = beta;   // гострий кут [cite: 77]
+        this.alpha = alpha; 
+        this.beta = beta;   
     }
 
     static help() {
         console.log("Ромб — це паралелограм, у якого всі сторони рівні.");
+    }
+
+    length() {
+        console.log("Сума довжин сторін ромба: " + (4 * this.a)); 
     }
 
     square() {
@@ -147,19 +151,6 @@ class Rhombus extends Square {
     }
 }
 
-console.log("--- Перевірка Кроку 3 ---");
-Square.help();
-Rectangle.help();
-Rhombus.help();
-
-const mySquare = new Square(5);
-const myRect = new Rectangle(4, 8);
-const myRhombus = new Rhombus(6, 120, 60);
-
-mySquare.info();
-myRect.info();
-myRhombus.info();
-
 class Parallelogram extends Rectangle {
     constructor(a, b, alpha, beta) {
         super(a, b);
@@ -171,10 +162,39 @@ class Parallelogram extends Rectangle {
         console.log("Паралелограм — чотирикутник, у якого протилежні сторони паралельні.");
     }
 
+    length() {
+        console.log("Сума довжин сторін паралелограма: " + (2 * (this.a + this.b)));
+    }
+
+    square() {
+        let area = (this.a * this.b * Math.sin(this.beta * Math.PI / 180)).toFixed(2);
+        console.log("Площа паралелограма: " + area);
+    }  
+
     info() {
-        console.log(`Паралелограм: сторони ${this.a} і ${this.b}, кути ${this.alpha}° і ${this.beta}°, периметр ${2*(this.a+this.b)}, площа ${this.a * this.b * Math.sin(this.beta * Math.PI / 180)}`);
+        console.log(`Паралелограм:
+        - Сторони ${this.a} і ${this.b}
+        - Кути ${this.alpha}° і ${this.beta}°
+        - Периметр ${2*(this.a+this.b)}
+        - Площа ${this.a * this.b * Math.sin(this.beta * Math.PI / 180)}`);
     }
 }
+        
+console.log("--- Перевірка Кроку 3 ---");
+Square.help();
+Rectangle.help();
+Rhombus.help();
+Parallelogram.help();
+
+const mySquare = new Square(5);
+const myRect = new Rectangle(4, 8);
+const myRhombus = new Rhombus(6, 120, 60);
+const myParallelogram = new Parallelogram(3, 7, 110, 70)
+
+mySquare.info();
+myRect.info();
+myRhombus.info();
+myParallelogram.info();
 
 Object.defineProperty(Rhombus.prototype, 'sideA', {
     get: function() { return this.a; },
@@ -210,10 +230,26 @@ const tri2 = Triangular(6, 8, 10);
 console.log("Трикутники:", tri1, tri2);
 
 const piMult2 = PiMultiplier(2);
+const piMult2Div3 = PiMultiplier(2/3);
 const piDiv2 = PiMultiplier(1/2);
+
 console.log("PI * 2 =", piMult2());
+console.log("PI * 2/3 =", piMult2Div3());
 console.log("PI / 2 =", piDiv2());
 
-const PaintBlue = Painter("Blue");
-PaintBlue({ type: "Truck" });
-PaintBlue({ maxSpeed: 200 }); // Має вивести "No ‘type’ property occurred!"
+let PaintBlue = Painter("blue");
+let PaintRed = Painter("red");
+let PaintYellow = Painter("yellow");
+
+let obj1 = { maxSpeed: 280, type: "Sportcar", color: "magenta" };
+let obj2 = { type: "Truck", "avg speed": 90, "load capacity": 2400 };
+let obj3 = { maxSpeed: 180, color: "purple", isCar: true };
+
+console.log("Object 1:");
+PaintBlue(obj1); PaintRed(obj1); PaintYellow(obj1);
+
+console.log("Object 2:");
+PaintBlue(obj2); PaintRed(obj2); PaintYellow(obj2);
+
+console.log("Object 3:");
+PaintBlue(obj3); PaintRed(obj3); PaintYellow(obj3);
