@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Лабораторна робота №2</title>
+</head>
+<body>
+    <h1>Результати лабораторної роботи №2 дивіться у консолі (F12)</h1>
+
+    <script>
+        // --- 1.2.3 Об'єкт car1 ---
+        var car1 = new Object();
+        car1.color = "Red";
+        car1.maxSpeed = 220;
+        car1.driver = {
+            name: "Твоє Прізвище та Ім'я",
+            category: "C",
+            "personal limitations": "No driving at night"
+        };
+        car1.tuning = true;
+        car1["number of accidents"] = 0;
+
+        // --- 1.2.4 Об'єкт car2 ---
+        var car2 = {
+            color: "Blue",
+            maxSpeed: 190,
+            driver: {
+                name: "Твоє Прізвище та Ім'я",
+                category: "B",
+                "personal limitations": null
+            },
+            tuning: false,
+            "number of accidents": 2
+        };
+
+        // --- 1.2.5 - 1.2.6 Методи drive ---
+        car1.drive = function() {
+            console.log("I am not driving at night");
+        };
+        car2.drive = function() {
+            console.log("I can drive anytime");
+        };
+
+        console.log("--- Перевірка Кроку 1 ---");
+        car1.drive();
+        car2.drive();
+
+        // --- 1.2.7 Конструктор Truck ---
+        function Truck(color, weight, avgSpeed, brand, model) {
+            this.color = color;
+            this.weight = weight;
+            this.avgSpeed = avgSpeed;
+            this.brand = brand;
+            this.model = model;
+
+            // 1.2.9 Метод trip
+            this.trip = function() {
+                if (!this.driver) {
+                    console.log("No driver assigned");
+                } else {
+                    var msg = "Driver " + this.driver.name;
+                    msg += this.driver.nightDriving ? " drives at night" : " does not drive at night";
+                    msg += " and has " + this.driver.experience + " years of experience";
+                    console.log(msg);
+                }
+            };
+        }
+
+        // 1.2.8 Метод AssignDriver через prototype
+        Truck.prototype.AssignDriver = function(name, nightDriving, experience) {
+            this.driver = {
+                name: name,
+                nightDriving: nightDriving,
+                experience: experience
+            };
+        };
+
+        // 1.2.10 Створення об'єктів Truck
+        var truck1 = new Truck("White", 8000, 70, "MAN", "TGX");
+        var truck2 = new Truck("Yellow", 5500, 85, "Mercedes", "Actros");
+
+        truck1.AssignDriver("Олександр Іванов", true, 5);
+        truck2.AssignDriver("Дмитро Петренко", false, 2);
+
+        console.log("--- Перевірка Кроку 2 ---");
+        truck1.trip();
+        truck2.trip();
+    </script>
+</body>
+</html>
