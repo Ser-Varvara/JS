@@ -85,6 +85,103 @@
         console.log("--- Перевірка Кроку 2 ---");
         truck1.trip();
         truck2.trip();
+
+        // 1.2.12 - 1.2.15 Клас Square (Квадрат) [cite: 53-56]
+class Square {
+    constructor(a) {
+        this.a = a; // сторона квадрата [cite: 55]
+    }
+
+    // Статичний метод [cite: 57]
+    static help() {
+        console.log("Квадрат — це правильний чотирикутник, у якого всі сторони рівні.");
+    }
+
+    length() {
+        console.log("Сума довжин сторін (Периметр): " + (4 * this.a)); // [cite: 59]
+    }
+
+    square() {
+        console.log("Площа: " + (this.a * this.a)); // [cite: 60]
+    }
+
+    info() {
+        console.log(`Квадрат:
+        - Сторони: 4 по ${this.a} [cite: 62]
+        - Кути: 4 по 90° [cite: 63]
+        - Периметр: ${4 * this.a} [cite: 64]
+        - Площа: ${this.a * this.a} [cite: 65]`);
+    }
+}
+
+// 1.2.16 - 1.2.17 Клас Rectangle (Прямокутник), успадкований від Square [cite: 66, 69]
+class Rectangle extends Square {
+    constructor(a, b) {
+        super(a); // викликаємо конструктор батька [cite: 16]
+        this.b = b; // ширина прямокутника [cite: 68]
+    }
+
+    static help() {
+        console.log("Прямокутник — це чотирикутник, у якого всі кути прямі (90°).");
+    }
+
+    length() {
+        console.log("Сума довжин сторін прямокутника: " + (2 * (this.a + this.b)));
+    }
+
+    square() {
+        console.log("Площа прямокутника: " + (this.a * this.b));
+    }
+
+    info() {
+        console.log(`Прямокутник:
+        - Сторони: a=${this.a}, b=${this.b}
+        - Кути: 4 по 90°
+        - Периметр: ${2 * (this.a + this.b)}
+        - Площа: ${this.a * this.b}`);
+    }
+}
+
+// 1.2.18 - 1.2.19 Клас Rhombus (Ромб), успадкований від Square [cite: 75, 78]
+class Rhombus extends Square {
+    constructor(a, alpha, beta) {
+        super(a);
+        this.alpha = alpha; // тупий кут [cite: 77]
+        this.beta = beta;   // гострий кут [cite: 77]
+    }
+
+    static help() {
+        console.log("Ромб — це паралелограм, у якого всі сторони рівні.");
+    }
+
+    // Площа ромба через сторону та синус кута (приблизно)
+    square() {
+        let area = (this.a * this.a * Math.sin(this.beta * Math.PI / 180)).toFixed(2);
+        console.log("Площа ромба: " + area);
+    }
+
+    info() {
+        console.log(`Ромб:
+        - Сторони: 4 по ${this.a}
+        - Кути: alpha=${this.alpha}°, beta=${this.beta}°
+        - Периметр: ${4 * this.a}
+        - Площа: ${(this.a * this.a * Math.sin(this.beta * Math.PI / 180)).toFixed(2)}`);
+    }
+}
+
+// 1.2.23 - 1.2.24 Перевірка
+console.log("--- Перевірка Кроку 3 ---");
+Square.help();
+Rectangle.help();
+Rhombus.help();
+
+const mySquare = new Square(5);
+const myRect = new Rectangle(4, 8);
+const myRhombus = new Rhombus(6, 120, 60);
+
+mySquare.info();
+myRect.info();
+myRhombus.info();
     </script>
 </body>
 </html>
