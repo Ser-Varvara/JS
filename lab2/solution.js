@@ -222,9 +222,6 @@ function Painter(color) {
 }
 
 console.log("--- Перевірка Кроку 4 ---");
-const myPara = new Parallelogram(10, 5, 120, 60);
-myPara.info();
-
 const tri1 = Triangular();
 const tri2 = Triangular(6, 8, 10);
 console.log("Трикутники:", tri1, tri2);
