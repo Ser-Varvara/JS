@@ -8,7 +8,6 @@
     <h1>Результати лабораторної роботи №2 дивіться у консолі (F12)</h1>
 
     <script>
-        // --- 1.2.3 Об'єкт car1 ---
         var car1 = new Object();
         car1.color = "Red";
         car1.maxSpeed = 220;
@@ -20,7 +19,6 @@
         car1.tuning = true;
         car1["number of accidents"] = 0;
 
-        // --- 1.2.4 Об'єкт car2 ---
         var car2 = {
             color: "Blue",
             maxSpeed: 190,
@@ -33,7 +31,6 @@
             "number of accidents": 2
         };
 
-        // --- 1.2.5 - 1.2.6 Методи drive ---
         car1.drive = function() {
             console.log("I am not driving at night");
         };
@@ -45,7 +42,6 @@
         car1.drive();
         car2.drive();
 
-        // --- 1.2.7 Конструктор Truck ---
         function Truck(color, weight, avgSpeed, brand, model) {
             this.color = color;
             this.weight = weight;
@@ -53,7 +49,6 @@
             this.brand = brand;
             this.model = model;
 
-            // 1.2.9 Метод trip
             this.trip = function() {
                 if (!this.driver) {
                     console.log("No driver assigned");
@@ -66,7 +61,6 @@
             };
         }
 
-        // 1.2.8 Метод AssignDriver через prototype
         Truck.prototype.AssignDriver = function(name, nightDriving, experience) {
             this.driver = {
                 name: name,
@@ -75,7 +69,6 @@
             };
         };
 
-        // 1.2.10 Створення об'єктів Truck
         var truck1 = new Truck("White", 8000, 70, "MAN", "TGX");
         var truck2 = new Truck("Yellow", 5500, 85, "Mercedes", "Actros");
 
@@ -86,13 +79,11 @@
         truck1.trip();
         truck2.trip();
 
-        // 1.2.12 - 1.2.15 Клас Square (Квадрат) [cite: 53-56]
 class Square {
     constructor(a) {
         this.a = a; // сторона квадрата [cite: 55]
     }
 
-    // Статичний метод [cite: 57]
     static help() {
         console.log("Квадрат — це правильний чотирикутник, у якого всі сторони рівні.");
     }
@@ -114,7 +105,6 @@ class Square {
     }
 }
 
-// 1.2.16 - 1.2.17 Клас Rectangle (Прямокутник), успадкований від Square [cite: 66, 69]
 class Rectangle extends Square {
     constructor(a, b) {
         super(a); // викликаємо конструктор батька [cite: 16]
@@ -142,7 +132,6 @@ class Rectangle extends Square {
     }
 }
 
-// 1.2.18 - 1.2.19 Клас Rhombus (Ромб), успадкований від Square [cite: 75, 78]
 class Rhombus extends Square {
     constructor(a, alpha, beta) {
         super(a);
@@ -154,7 +143,6 @@ class Rhombus extends Square {
         console.log("Ромб — це паралелограм, у якого всі сторони рівні.");
     }
 
-    // Площа ромба через сторону та синус кута (приблизно)
     square() {
         let area = (this.a * this.a * Math.sin(this.beta * Math.PI / 180)).toFixed(2);
         console.log("Площа ромба: " + area);
@@ -169,7 +157,6 @@ class Rhombus extends Square {
     }
 }
 
-// 1.2.23 - 1.2.24 Перевірка
 console.log("--- Перевірка Кроку 3 ---");
 Square.help();
 Rectangle.help();
@@ -183,7 +170,6 @@ mySquare.info();
 myRect.info();
 myRhombus.info();
 
-        [cite_start]// 1.2.20 - 1.2.21 Клас Parallelogram [cite: 84-91]
 class Parallelogram extends Rectangle {
     constructor(a, b, alpha, beta) {
         super(a, b);
@@ -200,26 +186,21 @@ class Parallelogram extends Rectangle {
     }
 }
 
-[cite_start]// 1.2.22 Геттери та сеттери для класу Rhombus (оскільки Parallelogram створено на базі Rectangle) [cite: 92]
-// Додамо їх прямо в прототип для наочності
 Object.defineProperty(Rhombus.prototype, 'sideA', {
     get: function() { return this.a; },
     set: function(value) { this.a = value; }
 });
 
-[cite_start]// 1.2.25 - 1.2.26 Фабрична функція Triangular [cite: 96-100]
 function Triangular(a = 3, b = 4, c = 5) {
     return { a, b, c };
 }
 
-[cite_start]// 1.2.27 - 1.2.28 Замикання PiMultiplier [cite: 101-105]
 function PiMultiplier(factor) {
     return function() {
         return (Math.PI * factor).toFixed(2);
     };
 }
 
-[cite_start]// 1.2.29 - 1.2.31 Функція Painter та її екземпляри [cite: 106-111]
 function Painter(color) {
     return function(obj) {
         if (obj.type) {
@@ -230,7 +211,6 @@ function Painter(color) {
     };
 }
 
-// Перевірка фінального кроку
 console.log("--- Перевірка Кроку 4 ---");
 const myPara = new Parallelogram(10, 5, 120, 60);
 myPara.info();
