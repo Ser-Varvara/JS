@@ -145,7 +145,7 @@ class Rhombus extends Square {
     info() {
         console.log(`Ромб:
         - Сторони: 4 по ${this.a}
-        - Кути: alpha=${this.alpha}°, beta=${this.beta}°
+        - Кути: ${this.alpha}°, ${this.beta}°
         - Периметр: ${4 * this.a}
         - Площа: ${(this.a * this.a * Math.sin(this.beta * Math.PI / 180)).toFixed(2)}`);
     }
