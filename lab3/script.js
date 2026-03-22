@@ -23,9 +23,9 @@
     }
 
     if (asciiSum > 400) {
-      console.log("High-value name: " + name + " (Sum: " + asciiSum + ")");
+      console.log("Special welcome for " + name + " (Sum: " + asciiSum + ")");
     } else {
-      console.log("Standard name: " + name + " (Sum: " + asciiSum + ")");
+      console.log("Regular hello for " + name + " (Sum: " + asciiSum + ")");
     }
   }
 })();
