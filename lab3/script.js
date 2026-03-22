@@ -15,12 +15,17 @@
   console.log("Анотація: Якщо ім'я закінчується на 'a' або 'n', виводимо Special welcome for SomeName, інакше - Regular hello for SomeName.");
   
   for (var i = 0; i < names.length; i++) {
-    var lastLetter = names[i].charAt(names[i].length - 1).toLowerCase();
-    
-    if (lastLetter === 'a' || lastLetter === 'n') {
-      console.log("Special welcome for " + names[i]);
+    var name = names[i];
+    var asciiSum = 0;
+
+    for (var j = 0; j < name.length; j++) {
+      asciiSum += name.charCodeAt(j);
+    }
+
+    if (asciiSum > 400) {
+      console.log("High-value name: " + name + " (Sum: " + asciiSum + ")");
     } else {
-      console.log("Regular hello for " + names[i]);
+      console.log("Standard name: " + name + " (Sum: " + asciiSum + ")");
     }
   }
 })();
