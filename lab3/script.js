@@ -12,7 +12,7 @@
     }
   }
 
-  console.log("Анотація: Якщо ім'я закінчується на 'a' або 'n', виводимо Special welcome for SomeName, інакше - Regular hello for SomeName.");
+  console.log("Анотація: Обчислюємо суму кодів усіх літер імені. Якщо сума > 400 — виводимо Special welcome for SomeName, інакше - Regular hello for SomeName.");
   
   for (var i = 0; i < names.length; i++) {
     var name = names[i];
