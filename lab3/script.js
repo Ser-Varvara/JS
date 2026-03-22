@@ -1,7 +1,7 @@
 (function () {
   var names = ["Bill", "John", "Jen", "Jason", "Paul", "Frank", "Steven", "Larry", "Paula", "Laura", "Jim"];
 
-  console.log("--- Анотація: Якщо ім'я починається на літеру 'j' або 'J', виводимо Goodbye SomeName, інакше – Hello SomeName. ---");
+  console.log("Анотація: Якщо ім'я починається на літеру 'j' або 'J', виводимо Goodbye SomeName, інакше – Hello SomeName.");
   for (var i = 0; i < names.length; i++) {
     var firstLetter = names[i].charAt(0).toLowerCase();
 
@@ -12,7 +12,7 @@
     }
   }
 
-  console.log("Анотація: Якщо ім'я закінчується на 'a' або 'n', виводимо особливе повідомлення.");
+  console.log("Анотація: Якщо ім'я закінчується на 'a' або 'n', виводимо Special welcome for SomeName, інакше - Regular hello for SomeName.");
   
   for (var i = 0; i < names.length; i++) {
     var lastLetter = names[i].charAt(names[i].length - 1).toLowerCase();
