@@ -2,27 +2,13 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <title>Лабораторна 4 - Сортування</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторна робота №4</title>
 </head>
 <body>
-    <h1>Результати сортування в консолі (F12)</h1>
+    <h1>Демонстрація бібліотеки сортування</h1>
+    <div id="output"></div>
 
-    <script src="MySortLib.js"></script>
-    <script>
-        const regularArray = Array.from({length: 105}, () => Math.floor(Math.random() * 1000));
-
-        const sparseArray = [...regularArray];
-        sparseArray[10] = undefined;
-        sparseArray[50] = undefined;
-        sparseArray[110] = 999; 
-
-        console.log("--- ТЕСТ: Звичайний масив ---");
-        MySortLib.bubbleSort(regularArray);
-        MySortLib.quickSort(regularArray);
-
-        console.log("\n--- ТЕСТ: Розріджений масив ---");
-        MySortLib.insertionSort(sparseArray);
-        MySortLib.shellSort(sparseArray);
-    </script>
+    <script src="sort.js"></script>
 </body>
 </html>
