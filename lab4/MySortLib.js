@@ -1,141 +1,284 @@
-const MySortLib = {
-    _prepareArray: function(arr) {
-        let hasUndefined = false;
-        const cleanArray = [];
-        const undefinedIndices = [];
+const SortLibrary = {
+    prepareArray(arr) {
+        const numbers = [];
+        let undefinedCount = 0;
 
         for (let i = 0; i < arr.length; i++) {
             if (arr[i] === undefined) {
-                hasUndefined = true;
-                undefinedIndices.push(i);
-            } else {
-                cleanArray.push(arr[i]);
+                undefinedCount++;
+            } else if (typeof arr[i] === "number") {
+                numbers.push(arr[i]);
             }
         }
 
-        if (hasUndefined) {
-            console.warn(`Знайдено undefined елементи на індексах: ${undefinedIndices.join(', ')}`);
+        return {
+            numbers,
+            undefinedCount
+        };
+    },
+
+    finalizeResult(sortedNumbers, undefinedCount, comparisons, swaps) {
+        const resultArray = [...sortedNumbers];
+
+        for (let i = 0; i < undefinedCount; i++) {
+            resultArray.push(undefined);
         }
-        return cleanArray;
+
+        return {
+            sortedArray: resultArray,
+            comparisons,
+            swaps,
+            hadUndefined: undefinedCount > 0
+        };
     },
 
-    _logStats: function(methodName, comparisons, swaps) {
-        console.log(`Метод: ${methodName} | Порівнянь: ${comparisons} | Обмінів: ${swaps}`);
+    compare(a, b, ascending = true) {
+        return ascending ? a > b : a < b;
     },
 
-    bubbleSort: function(inputArr, ascending = true) {
-        let arr = this._prepareArray(inputArr);
-        let n = arr.length;
-        let comparisons = 0, swaps = 0;
+    bubbleSort(arr, ascending = true) {
+        const prepared = this.prepareArray(arr);
+        const a = [...prepared.numbers];
+        let comparisons = 0;
+        let swaps = 0;
 
-        for (let i = 0; i < n - 1; i++) {
-            for (let j = 0; j < n - i - 1; j++) {
+        for (let i = 0; i < a.length - 1; i++) {
+            for (let j = 0; j < a.length - 1 - i; j++) {
                 comparisons++;
-                if (ascending ? arr[j] > arr[j + 1] : arr[j] < arr[j + 1]) {
-                    [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+                if (this.compare(a[j], a[j + 1], ascending)) {
+                    [a[j], a[j + 1]] = [a[j + 1], a[j]];
                     swaps++;
                 }
             }
         }
-        this._logStats("Обміну", comparisons, swaps);
-        return arr;
+
+        return this.finalizeResult(a, prepared.undefinedCount, comparisons, swaps);
     },
 
-    selectionSort: function(inputArr, ascending = true) {
-        let arr = this._prepareArray(inputArr);
-        let n = arr.length;
-        let comparisons = 0, swaps = 0;
+    selectionSort(arr, ascending = true) {
+        const prepared = this.prepareArray(arr);
+        const a = [...prepared.numbers];
+        let comparisons = 0;
+        let swaps = 0;
 
-        for (let i = 0; i < n - 1; i++) {
-            let minMaxIdx = i;
-            for (let j = i + 1; j < n; j++) {
+        for (let i = 0; i < a.length - 1; i++) {
+            let targetIndex = i;
+
+            for (let j = i + 1; j < a.length; j++) {
                 comparisons++;
-                if (ascending ? arr[j] < arr[minMaxIdx] : arr[j] > arr[minMaxIdx]) {
-                    minMaxIdx = j;
+                if (ascending ? a[j] < a[targetIndex] : a[j] > a[targetIndex]) {
+                    targetIndex = j;
                 }
             }
-            if (minMaxIdx !== i) {
-                [arr[i], arr[minMaxIdx]] = [arr[minMaxIdx], arr[i]];
+
+            if (targetIndex !== i) {
+                [a[i], a[targetIndex]] = [a[targetIndex], a[i]];
                 swaps++;
             }
         }
-        this._logStats("Мінімальних елементів", comparisons, swaps);
-        return arr;
+
+        return this.finalizeResult(a, prepared.undefinedCount, comparisons, swaps);
     },
 
-    insertionSort: function(inputArr, ascending = true) {
-        let arr = this._prepareArray(inputArr);
-        let n = arr.length;
-        let comparisons = 0, moves = 0;
+    insertionSort(arr, ascending = true) {
+        const prepared = this.prepareArray(arr);
+        const a = [...prepared.numbers];
+        let comparisons = 0;
+        let swaps = 0;
 
-        for (let i = 1; i < n; i++) {
-            let key = arr[i];
+        for (let i = 1; i < a.length; i++) {
+            let key = a[i];
             let j = i - 1;
+
             while (j >= 0) {
                 comparisons++;
-                if (ascending ? arr[j] > key : arr[j] < key) {
-                    arr[j + 1] = arr[j];
-                    moves++;
+                if (ascending ? a[j] > key : a[j] < key) {
+                    a[j + 1] = a[j];
+                    swaps++;
                     j--;
-                } else break;
+                } else {
+                    break;
+                }
             }
-            arr[j + 1] = key;
+
+            a[j + 1] = key;
         }
-        this._logStats("Вставок", comparisons, moves);
-        return arr;
+
+        return this.finalizeResult(a, prepared.undefinedCount, comparisons, swaps);
     },
 
-    shellSort: function(inputArr, ascending = true) {
-        let arr = this._prepareArray(inputArr);
-        let n = arr.length;
-        let comparisons = 0, swaps = 0;
+    shellSort(arr, ascending = true) {
+        const prepared = this.prepareArray(arr);
+        const a = [...prepared.numbers];
+        let comparisons = 0;
+        let swaps = 0;
 
-        for (let gap = Math.floor(n / 2); gap > 0; gap = Math.floor(gap / 2)) {
-            for (let i = gap; i < n; i++) {
-                let temp = arr[i];
+        let gap = Math.floor(a.length / 2);
+
+        while (gap > 0) {
+            for (let i = gap; i < a.length; i++) {
+                let temp = a[i];
                 let j = i;
+
                 while (j >= gap) {
                     comparisons++;
-                    if (ascending ? arr[j - gap] > temp : arr[j - gap] < temp) {
-                        arr[j] = arr[j - gap];
+                    if (ascending ? a[j - gap] > temp : a[j - gap] < temp) {
+                        a[j] = a[j - gap];
                         swaps++;
                         j -= gap;
-                    } else break;
+                    } else {
+                        break;
+                    }
                 }
-                arr[j] = temp;
+
+                a[j] = temp;
             }
+
+            gap = Math.floor(gap / 2);
         }
-        this._logStats("Шелла", comparisons, swaps);
-        return arr;
+
+        return this.finalizeResult(a, prepared.undefinedCount, comparisons, swaps);
     },
 
-    quickSort: function(inputArr, ascending = true) {
-        let arr = this._prepareArray(inputArr);
-        let stats = { comparisons: 0, swaps: 0 };
+    quickSort(arr, ascending = true) {
+        const prepared = this.prepareArray(arr);
+        const a = [...prepared.numbers];
+        let comparisons = 0;
+        let swaps = 0;
 
-        const sort = (a, low, high) => {
-            if (low < high) {
-                let p = partition(a, low, high);
-                sort(a, low, p);
-                sort(a, p + 1, high);
+        const partition = (items, left, right) => {
+            const pivot = items[Math.floor((left + right) / 2)];
+            let i = left;
+            let j = right;
+
+            while (i <= j) {
+                while (true) {
+                    comparisons++;
+                    if (ascending ? items[i] < pivot : items[i] > pivot) {
+                        i++;
+                    } else {
+                        break;
+                    }
+                }
+
+                while (true) {
+                    comparisons++;
+                    if (ascending ? items[j] > pivot : items[j] < pivot) {
+                        j--;
+                    } else {
+                        break;
+                    }
+                }
+
+                if (i <= j) {
+                    [items[i], items[j]] = [items[j], items[i]];
+                    swaps++;
+                    i++;
+                    j--;
+                }
+            }
+
+            return i;
+        };
+
+        const quickSortRecursive = (items, left, right) => {
+            if (left < right) {
+                const index = partition(items, left, right);
+
+                if (left < index - 1) {
+                    quickSortRecursive(items, left, index - 1);
+                }
+
+                if (index < right) {
+                    quickSortRecursive(items, index, right);
+                }
             }
         };
 
-        const partition = (a, low, high) => {
-            let pivot = a[Math.floor((low + high) / 2)];
-            let i = low - 1;
-            let j = high + 1;
-            while (true) {
-                do { i++; stats.comparisons++; } while (ascending ? a[i] < pivot : a[i] > pivot);
-                do { j--; stats.comparisons++; } while (ascending ? a[j] > pivot : a[j] < pivot);
-                if (i >= j) return j;
-                [a[i], a[j]] = [a[j], a[i]];
-                stats.swaps++;
-            }
-        };
+        quickSortRecursive(a, 0, a.length - 1);
 
-        sort(arr, 0, arr.length - 1);
-        this._logStats("Хоара", stats.comparisons, stats.swaps);
-        return arr;
+        return this.finalizeResult(a, prepared.undefinedCount, comparisons, swaps);
     }
 };
+
+function generateNormalArray(size) {
+    const arr = [];
+    for (let i = 0; i < size; i++) {
+        arr.push(Math.floor(Math.random() * 1000));
+    }
+    return arr;
+}
+
+function generateSparseArray(size) {
+    const arr = new Array(size);
+    for (let i = 0; i < size; i++) {
+        if (i % 10 !== 0) {
+            arr[i] = Math.floor(Math.random() * 1000);
+        }
+    }
+    return arr;
+}
+
+function addResult(title, result, originalArray) {
+    const output = document.getElementById("output");
+
+    const section = document.createElement("div");
+    section.className = "section";
+
+    const undefinedMessage = result.hadUndefined
+        ? "Так, масив містив undefined-елементи."
+        : "Ні, масив не містив undefined-елементів.";
+
+    section.innerHTML = `
+        <h2>${title}</h2>
+        <p><strong>Початковий масив:</strong></p>
+        <pre>${JSON.stringify(originalArray)}</pre>
+        <p><strong>Відсортований масив:</strong></p>
+        <pre>${JSON.stringify(result.sortedArray)}</pre>
+        <p><strong>Кількість порівнянь:</strong> ${result.comparisons}</p>
+        <p><strong>Кількість обмінів / переміщень:</strong> ${result.swaps}</p>
+        <p><strong>Наявність undefined:</strong> ${undefinedMessage}</p>
+    `;
+
+    output.appendChild(section);
+
+    console.log(title, result);
+}
+
+function testAllSorts(array, arrayName) {
+    addResult(
+        `${arrayName} — Сортування обміну`,
+        SortLibrary.bubbleSort(array, true),
+        array
+    );
+
+    addResult(
+        `${arrayName} — Сортування мінімальних елементів`,
+        SortLibrary.selectionSort(array, true),
+        array
+    );
+
+    addResult(
+        `${arrayName} — Сортування вставок`,
+        SortLibrary.insertionSort(array, true),
+        array
+    );
+
+    addResult(
+        `${arrayName} — Сортування Шелла`,
+        SortLibrary.shellSort(array, true),
+        array
+    );
+
+    addResult(
+        `${arrayName} — Швидке сортування Хоара`,
+        SortLibrary.quickSort(array, true),
+        array
+    );
+}
+
+const normalArray = generateNormalArray(100);
+const sparseArray = generateSparseArray(100);
+
+testAllSorts(normalArray, "Нерозріджений масив");
+testAllSorts(sparseArray, "Розріджений масив");
