@@ -220,29 +220,17 @@ function generateSparseArray(size) {
 }
 
 function addResult(title, result, originalArray) {
-    const output = document.getElementById("output");
-
-    const section = document.createElement("div");
-    section.className = "section";
-
     const undefinedMessage = result.hadUndefined
         ? "Так, масив містив undefined-елементи."
         : "Ні, масив не містив undefined-елементів.";
 
-    section.innerHTML = `
-        <h2>${title}</h2>
-        <p><strong>Початковий масив:</strong></p>
-        <pre>${JSON.stringify(originalArray)}</pre>
-        <p><strong>Відсортований масив:</strong></p>
-        <pre>${JSON.stringify(result.sortedArray)}</pre>
-        <p><strong>Кількість порівнянь:</strong> ${result.comparisons}</p>
-        <p><strong>Кількість обмінів / переміщень:</strong> ${result.swaps}</p>
-        <p><strong>Наявність undefined:</strong> ${undefinedMessage}</p>
-    `;
-
-    output.appendChild(section);
-
-    console.log(title, result);
+    console.log("====================================");
+    console.log(title);
+    console.log("Початковий масив:", originalArray);
+    console.log("Відсортований масив:", result.sortedArray);
+    console.log("Кількість порівнянь:", result.comparisons);
+    console.log("Кількість обмінів / переміщень:", result.swaps);
+    console.log("Наявність undefined:", undefinedMessage);
 }
 
 function testAllSorts(array, arrayName) {
