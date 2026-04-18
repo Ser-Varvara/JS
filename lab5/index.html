@@ -2,29 +2,37 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <title>Лабораторна робота №5</title>
+    <title>Pixel Hunt - Lab 5</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h2>Взаємодія з DOM та вводом користувача</h2>
-    
-    <input type="text" id="userInput" placeholder="Введіть ваше ім'я">
-    <button id="greetBtn">Привітатися</button>
-    
-    <p id="result"></p>
+    <header>
+        <h1>Pixel Hunt</h1>
+        <div class="controls">
+            <label>Choose difficulty: 
+                <select id="difficulty">
+                    <option value="easy">Easy (2s, Big)</option>
+                    <option value="medium">Medium (1.2s, Mid)</option>
+                    <option value="hard">Hard (0.7s, Small)</option>
+                </select>
+            </label>
 
-    <script>
-        const button = document.getElementById('greetBtn');
-        const input = document.getElementById('userInput');
-        const resultParagraph = document.getElementById('result');
+            <label>Choose color: 
+                <select id="color">
+                    <option value="red">Red</option>
+                    <option value="blue">Blue</option>
+                    <option value="green">Green</option>
+                </select>
+            </label>
 
-        button.addEventListener('click', () => {
-            const name = input.value; 
-            if (name) {
-                resultParagraph.textContent = `Привіт, ${name}!`;
-            } else {
-                resultParagraph.innerHTML = '<span style="color:red;">Будь ласка, введіть ім\'я</span>';
-            }
-        });
-    </script>
+            <button id="startBtn">Start</button>
+            <span id="scoreDisplay">Score: 0</span>
+        </div>
+    </header>
+
+    <main id="gameArea">
+    </main>
+
+    <script src="script.js"></script>
 </body>
 </html>
