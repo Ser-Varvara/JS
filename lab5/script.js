@@ -15,7 +15,7 @@ function gameOver() {
     clearTimeout(gameTimer);
     
     // Повідомлення про програш
-    alert(`Game over! Your score is ${score}, congratulations!\nPlease, reload the page to start a new game.`);
+    alert(`Game over! Your score is ${score}, congratulations!\nPlease, click ok to start a new game.`);
 
     // --- ПОВЕРНЕННЯ ДО ПОЧАТКОВОГО СТАНУ ---
     difficultySelect.selectedIndex = 0; // Скидаємо вибір складності на "--Please choose an option--"
