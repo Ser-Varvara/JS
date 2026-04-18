@@ -2,7 +2,7 @@
   "levels": [
     {
       "id": "a",
-      "minSteps": 7,
+      "minSteps": 12,
       "grid": [
         [1, 1, 1, 1, 1],
         [0, 0, 1, 0, 0],
