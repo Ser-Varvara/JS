@@ -15,7 +15,7 @@ function gameOver() {
     clearTimeout(gameTimer); // Зупиняємо таймер
     
     // Використовуємо alert для імітації системної картки з фото image_0b1ce1.png
-    alert(`Game over! Your score is ${score}, congratulations!\nPlease, reload the page to start a new game.`);
+    alert(`Game over! Your score is ${score}, congratulations!\nPlease, click ok to start a new game.`);
     
     startBtn.disabled = false;
 }
