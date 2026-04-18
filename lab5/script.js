@@ -35,7 +35,7 @@ function spawnTarget() {
     if (difficulty === 'easy') { size = 80; time = 3000; }
     else if (difficulty === 'medium') { size = 60; time = 2000; }
     else if (difficulty === 'hard') { size = 40; time = 1000; }
-    else { size = 20; time = 500; } // Impossible
+    else { size = 20; time = 700; } // Impossible
 
     target.style.width = size + 'px';
     target.style.height = size + 'px';
