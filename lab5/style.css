@@ -1,0 +1,18 @@
+body { font-family: Arial, sans-serif; margin: 0; overflow: hidden; }
+header { padding: 10px; border-bottom: 1px solid #ccc; text-align: center; }
+.controls { display: flex; justify-content: center; gap: 15px; align-items: center; margin-top: 10px; }
+
+#gameArea {
+    position: relative;
+    width: 100vw;
+    height: calc(100vh - 120px); /* Вираховуємо місце під панель */
+    background-color: #f9f9f9;
+    cursor: crosshair;
+}
+
+.target {
+    position: absolute;
+    border-radius: 50%; /* Робимо коло */
+    cursor: pointer;
+    transition: transform 0.1s;
+}
