@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Lights Out Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>Вимкни лампочки</h1>
+        
+        <div class="stats">
+            <p>Час: <span id="timer">0</span> сек</p>
+            <p>Ходи: <span id="steps">0</span></p>
+            <p>Мінімум ходів для рівня: <span id="min-steps">0</span></p>
+        </div>
+
+        <div id="game-board" class="board"></div>
+
+        <div class="controls">
+            <button id="new-game">Нова гра</button>
+            <button id="restart">Перезапуск</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
