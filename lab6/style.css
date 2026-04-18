@@ -31,7 +31,7 @@ body {
     background-color: #7f8c8d; /* Вимкнено */
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
 }
 
 .cell.is-on {
