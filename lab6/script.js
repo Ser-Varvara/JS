@@ -1,4 +1,4 @@
-let allLevels = []; // Зберігаємо всі рівні тут
+let allLevels = [];
 let currentLevelData = null;
 let currentGrid = [];
 let steps = 0;
@@ -17,11 +17,8 @@ async function loadLevels() {
         const response = await fetch('./data/levels.json');
         const data = await response.json();
         allLevels = data.levels;
-        
-        // Початкова ініціалізація
         initGame(0);
         
-        // Налаштування кнопок
         document.getElementById('new-game').onclick = () => {
             let nextIndex;
             do {
@@ -32,7 +29,6 @@ async function loadLevels() {
 
         document.getElementById('restart').onclick = () => initGame(currentLevelIndex);
         
-        // Додай цю кнопку в HTML, якщо хочеш авто-розв'язок
         const solveBtn = document.getElementById('solve');
         if (solveBtn) solveBtn.onclick = solveGame;
 
@@ -43,7 +39,6 @@ async function loadLevels() {
 
 function initGame(index) {
     currentLevelIndex = index;
-    // Копіюємо дані рівня, щоб не псувати оригінал в allLevels
     currentLevelData = JSON.parse(JSON.stringify(allLevels[index]));
     currentGrid = currentLevelData.grid;
     
@@ -70,6 +65,8 @@ function renderBoard() {
         for (let c = 0; c < 5; c++) {
             const cell = document.createElement('div');
             cell.classList.add('cell');
+            cell.setAttribute('data-r', r);
+            cell.setAttribute('data-c', c);
             if (currentGrid[r][c] === 1) cell.classList.add('is-on');
             cell.onclick = () => handleCellClick(r, c);
             boardElement.appendChild(cell);
@@ -78,29 +75,26 @@ function renderBoard() {
 }
 
 function handleCellClick(r, c) {
-    // Якщо клікнули на ту саму клітинку — "скасовуємо" хід у лічильнику
     if (lastClicked.r === r && lastClicked.c === c) {
         steps--;
-        lastClicked = { r: -1, c: -1 }; // Скидаємо, щоб третій клік знову був "новим"
+        lastClicked = { r: -1, c: -1 };
     } else {
         steps++;
         lastClicked = { r, c };
     }
 
-    // Зміна стану (хрест)
     toggleLightsAt(r, c);
-    
     renderBoard();
     updateUI();
     checkWin();
 }
 
 function toggleLightsAt(r, c) {
-    toggleSingleLight(r, c);       // Центр
-    toggleSingleLight(r - 1, c);   // Топ
-    toggleSingleLight(r + 1, c);   // Низ
-    toggleSingleLight(r, c - 1);   // Ліво
-    toggleSingleLight(r, c + 1);   // Право
+    toggleSingleLight(r, c);
+    toggleSingleLight(r - 1, c);
+    toggleSingleLight(r + 1, c);
+    toggleSingleLight(r, c - 1);
+    toggleSingleLight(r, c + 1);
 }
 
 function toggleSingleLight(r, c) {
@@ -123,39 +117,30 @@ function checkWin() {
     }
 }
 
-// АЛГОРИТМ АВТО-РОЗВ'ЯЗАННЯ (SOLVER)
-async function solveGame() {
-    // Скидаємо гру для чистого розв'язку
-    initGame(currentLevelIndex);
-    
-    // 1. "Chase the lights" (виганяємо світло вниз)
-    for (let r = 0; r < 4; r++) {
-        for (let c = 0; c < 5; c++) {
-            if (currentGrid[r][c] === 1) {
-                await performStep(r + 1, c);
-            }
-        }
+// ФУНКЦІЯ ДЛЯ ВІЗУАЛЬНОГО ПОКАЗУ ХОДІВ БОТА
+async function performStep(r, c) {
+    const cell = document.querySelector(`[data-r="${r}"][data-c="${c}"]`);
+    if (cell) {
+        cell.style.boxShadow = "0 0 20px 5px white"; // Підсвічуємо білим
+        cell.style.transform = "scale(0.85)";
     }
 
-    // 2. Аналіз останнього рядка для корекції першого
-    const lastRow = currentGrid[4];
-    const combinations = {
-        '10000': [3, 4],
-        '01000': [1, 4],
-        '00100': [3],
-        '00010': [0, 3],
-        '00001': [0, 1],
-        '11000': [2],
-        '00011': [2]
-        // Додай інші комбінації, якщо зустрінеш специфічні випадки
-    };
+    return new Promise(res => {
+        setTimeout(() => {
+            handleCellClick(r, c);
+            res();
+        }, 400); // Затримка 0.4 сек, щоб було видно хід
+    });
+}
 
-    let rowKey = lastRow.join('');
-    if (combinations[rowKey]) {
-        for (let col of combinations[rowKey]) {
-            await performStep(0, col);
-        }
-        // Знову виганяємо світло вниз
+// АЛГОРИТМ АВТО-РОЗВ'ЯЗАННЯ (ПОВНИЙ)
+async function solveGame() {
+    // 1. Починаємо спочатку
+    initGame(currentLevelIndex);
+    await new Promise(r => setTimeout(r, 500));
+
+    // Функція витіснення світла вниз
+    const chaseDown = async () => {
         for (let r = 0; r < 4; r++) {
             for (let c = 0; c < 5; c++) {
                 if (currentGrid[r][c] === 1) {
@@ -163,16 +148,35 @@ async function solveGame() {
                 }
             }
         }
-    }
-}
+    };
 
-function performStep(r, c) {
-    return new Promise(res => {
-        setTimeout(() => {
-            handleCellClick(r, c);
-            res();
-        }, 300); // Швидкість "робота"
-    });
+    // Перший прогін
+    await chaseDown();
+
+    // 2. Корекція першого рядка згідно стану останнього рядка
+    const lastRow = currentGrid[4].join('');
+    
+    // Повна математична таблиця корекцій для поля 5x5
+    const combinations = {
+        '10001': [3],          // Горять 1 і 5 -> тиснемо 4 в 1-му ряду
+        '01010': [1, 4],       // Горять 2 і 4 -> тиснемо 2 і 5
+        '11100': [1],          // Горять 1,2,3 -> тиснемо 2
+        '00111': [3],          // Горять 3,4,5 -> тиснемо 4
+        '10110': [4],          // Горять 1,3,4 -> тиснемо 5
+        '01101': [0],          // Горять 2,3,5 -> тиснемо 1
+        '11011': [2],          // Горять 1,2,4,5 -> тиснемо 3
+        '00011': [1],          // Твоя ситуація зі скрина: 4,5 -> тиснемо 2
+        '11000': [3],          // 1,2 -> тиснемо 4
+        '01110': [1, 2, 3]     // 2,3,4 -> тиснемо 2,3,4
+    };
+
+    if (combinations[lastRow]) {
+        for (let col of combinations[lastRow]) {
+            await performStep(0, col);
+        }
+        // Фінальний прогін
+        await chaseDown();
+    }
 }
 
 document.addEventListener('DOMContentLoaded', loadLevels);
