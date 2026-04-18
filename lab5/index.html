@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Лабораторна робота №5</title>
+</head>
+<body>
+    <h2>Взаємодія з DOM та вводом користувача</h2>
+    
+    <input type="text" id="userInput" placeholder="Введіть ваше ім'я">
+    <button id="greetBtn">Привітатися</button>
+    
+    <p id="result"></p>
+
+    <script>
+        const button = document.getElementById('greetBtn');
+        const input = document.getElementById('userInput');
+        const resultParagraph = document.getElementById('result');
+
+        button.addEventListener('click', () => {
+            const name = input.value; 
+            if (name) {
+                resultParagraph.textContent = `Привіт, ${name}!`;
+            } else {
+                resultParagraph.innerHTML = '<span style="color:red;">Будь ласка, введіть ім\'я</span>';
+            }
+        });
+    </script>
+</body>
+</html>
