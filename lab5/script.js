@@ -5,26 +5,26 @@ const difficultySelect = document.querySelector('#difficulty');
 const colorSelect = document.querySelector('#color');
 
 let score = 0;
-let gameTimer = null; // Змінна для одного активного таймера
+let gameTimer = null;
 let target = null;
-let isPlaying = false; // Прапор стану гри
+let isPlaying = false;
 
 function gameOver() {
     isPlaying = false;
     if (target) target.remove();
-    clearTimeout(gameTimer); // Зупиняємо таймер
+    clearTimeout(gameTimer);
     
-    // Використовуємо alert для імітації системної картки з фото image_0b1ce1.png
-    alert(`Game over! Your score is ${score}, congratulations!\nPlease, click ok to start a new game.`);
+    // Картка програшу згідно з фото
+    alert(`Game over! Your score is ${score}, congratulations!\nPlease, reload the page to start a new game.`);
     
     startBtn.disabled = false;
 }
 
 function spawnTarget() {
-    if (!isPlaying) return; // Якщо програли — нові фігури не створюються
+    if (!isPlaying) return;
 
     if (target) target.remove();
-    clearTimeout(gameTimer); // Очищуємо старий таймер перед створенням нового
+    clearTimeout(gameTimer);
 
     target = document.createElement('div');
     target.className = 'target';
@@ -32,11 +32,10 @@ function spawnTarget() {
     const difficulty = difficultySelect.value;
     let size, time;
 
-    // Встановлюємо параметри згідно з твоїм запитом
     if (difficulty === 'easy') { size = 80; time = 3000; }
     else if (difficulty === 'medium') { size = 60; time = 2000; }
     else if (difficulty === 'hard') { size = 40; time = 1000; }
-    else { size = 20; time = 500; } // Impossible
+    else { size = 20; time = 500; }
 
     target.style.width = size + 'px';
     target.style.height = size + 'px';
@@ -47,23 +46,27 @@ function spawnTarget() {
     target.style.left = Math.random() * maxX + 'px';
     target.style.top = Math.random() * maxY + 'px';
 
-    // Обробка успішного кліку
     target.onclick = function(e) {
         e.stopPropagation();
         score++;
         scoreDisplay.textContent = `Score: ${score}`;
-        spawnTarget(); // Клікнули вчасно — створюємо нову
+        spawnTarget(); 
     };
 
     gameArea.appendChild(target);
 
-    // ТАЙМЕР ПРОГРАШУ: якщо час вийшов, а кліку не було — GameOver
     gameTimer = setTimeout(() => {
         if (isPlaying) gameOver();
     }, time);
 }
 
 startBtn.onclick = function() {
+    // ПЕРЕВІРКА: чи обрано складність та колір
+    if (difficultySelect.value === "" || colorSelect.value === "") {
+        alert("Please choose both difficulty and color before starting!");
+        return; // Перериваємо функцію, гра не почнеться
+    }
+
     score = 0;
     scoreDisplay.textContent = `Score: 0`;
     isPlaying = true;
