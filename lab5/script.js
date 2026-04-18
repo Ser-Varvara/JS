@@ -5,24 +5,26 @@ const difficultySelect = document.querySelector('#difficulty');
 const colorSelect = document.querySelector('#color');
 
 let score = 0;
-let gameTimer; // Ідентифікатор таймера
-let target;
+let gameTimer = null; // Змінна для одного активного таймера
+let target = null;
+let isPlaying = false; // Прапор стану гри
 
 function gameOver() {
-    // Видаляємо фігуру та зупиняємо таймер
+    isPlaying = false;
     if (target) target.remove();
-    clearTimeout(gameTimer);
-
-    // Виводимо повідомлення як на фото
+    clearTimeout(gameTimer); // Зупиняємо таймер
+    
+    // Використовуємо alert для імітації системної картки з фото image_0b1ce1.png
     alert(`Game over! Your score is ${score}, congratulations!\nPlease, reload the page to start a new game.`);
     
-    // Робимо кнопку знову активною для нової гри
     startBtn.disabled = false;
 }
 
 function spawnTarget() {
-    // Очищуємо попередню фігуру, якщо вона була
+    if (!isPlaying) return; // Якщо програли — нові фігури не створюються
+
     if (target) target.remove();
+    clearTimeout(gameTimer); // Очищуємо старий таймер перед створенням нового
 
     target = document.createElement('div');
     target.className = 'target';
@@ -30,11 +32,11 @@ function spawnTarget() {
     const difficulty = difficultySelect.value;
     let size, time;
 
-    // Налаштування згідно з твоїми умовами
+    // Встановлюємо параметри згідно з твоїм запитом
     if (difficulty === 'easy') { size = 80; time = 3000; }
     else if (difficulty === 'medium') { size = 60; time = 2000; }
     else if (difficulty === 'hard') { size = 40; time = 1000; }
-    else if (difficulty === 'impossible') { size = 20; time = 500; }
+    else { size = 20; time = 500; } // Impossible
 
     target.style.width = size + 'px';
     target.style.height = size + 'px';
@@ -45,31 +47,26 @@ function spawnTarget() {
     target.style.left = Math.random() * maxX + 'px';
     target.style.top = Math.random() * maxY + 'px';
 
-    // ОБРОБКА КЛІКУ
-    target.addEventListener('click', (e) => {
+    // Обробка успішного кліку
+    target.onclick = function(e) {
         e.stopPropagation();
         score++;
         scoreDisplay.textContent = `Score: ${score}`;
-        
-        // ВАЖЛИВО: Скасовуємо таймер програшу, бо користувач встиг клікнути!
-        clearTimeout(gameTimer); 
-        
-        // Створюємо нову фігуру
-        spawnTarget(); 
-    });
+        spawnTarget(); // Клікнули вчасно — створюємо нову
+    };
 
     gameArea.appendChild(target);
 
-    // ТАЙМЕР ПРОГРАШУ
-    // Якщо цей код спрацює через 'time' мілісекунд — викликається gameOver
+    // ТАЙМЕР ПРОГРАШУ: якщо час вийшов, а кліку не було — GameOver
     gameTimer = setTimeout(() => {
-        gameOver();
+        if (isPlaying) gameOver();
     }, time);
 }
 
-startBtn.addEventListener('click', () => {
+startBtn.onclick = function() {
     score = 0;
     scoreDisplay.textContent = `Score: 0`;
-    startBtn.disabled = true; // Блокуємо кнопку, поки триває гра
+    isPlaying = true;
+    startBtn.disabled = true;
     spawnTarget();
-});
+};
