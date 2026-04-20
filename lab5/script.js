@@ -14,14 +14,12 @@ function gameOver() {
     if (target) target.remove();
     clearTimeout(gameTimer);
     
-    // Повідомлення про програш
     alert(`Game over! Your score is ${score}, congratulations!\nPlease, click ok to start a new game.`);
 
-    // --- ПОВЕРНЕННЯ ДО ПОЧАТКОВОГО СТАНУ ---
-    difficultySelect.selectedIndex = 0; // Скидаємо вибір складності на "--Please choose an option--"
-    colorSelect.selectedIndex = 0;      // Скидаємо вибір кольору на "--Please choose an option--"
+    difficultySelect.selectedIndex = 0;
+    colorSelect.selectedIndex = 0;     
     
-    startBtn.disabled = false; // Знову дозволяємо натиснути Start
+    startBtn.disabled = false; 
 }
 
 function spawnTarget() {
@@ -33,7 +31,6 @@ function spawnTarget() {
     target = document.createElement('div');
     target.className = 'target';
     
-    // Отримуємо поточні налаштування
     const difficulty = difficultySelect.value;
     let size, time;
 
@@ -66,7 +63,6 @@ function spawnTarget() {
 }
 
 startBtn.onclick = function() {
-    // Перевірка, чи користувач обрав параметри
     if (difficultySelect.value === "" || colorSelect.value === "") {
         alert("Please choose both difficulty and color before starting!");
         return;
