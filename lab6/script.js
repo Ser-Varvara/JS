@@ -11,7 +11,6 @@ const stepsElement = document.getElementById('steps');
 const timerElement = document.getElementById('timer');
 const minStepsElement = document.getElementById('min-steps');
 
-// Завантаження рівнів
 async function loadLevels() {
     try {
         const response = await fetch('./data/levels.json');
@@ -37,7 +36,7 @@ async function loadLevels() {
 
 function initGame(levels, index) {
     currentLevelIndex = index;
-    currentLevelData = JSON.parse(JSON.stringify(levels[index])); // Глибоке копіювання
+    currentLevelData = JSON.parse(JSON.stringify(levels[index])); 
     currentGrid = currentLevelData.grid;
     
     steps = 0;
@@ -69,7 +68,6 @@ function renderBoard() {
 }
 
 function handleCellClick(r, c) {
-    // Перевірка на повторний клік (хід знімається)
     if (lastClicked.r === r && lastClicked.c === c) {
         steps--;
         lastClicked = { r: -1, c: -1 };
