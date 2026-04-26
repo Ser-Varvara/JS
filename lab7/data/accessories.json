@@ -1,0 +1,19 @@
+{
+  "categoryName": "Аксесуари",
+  "items": [
+    {
+      "id": 301,
+      "name": "AirPods Pro 2",
+      "shortname": "ap2",
+      "description": "Активне шумозаглушення та просторовий звук.",
+      "price": "9500 грн"
+    },
+    {
+      "id": 302,
+      "name": "Logitech MX Master 3",
+      "shortname": "mx3",
+      "description": "Ергономічна миша для професіоналів.",
+      "price": "4200 грн"
+    }
+  ]
+}
