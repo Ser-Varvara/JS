@@ -1,0 +1,19 @@
+{
+  "categoryName": "Ноутбуки",
+  "items": [
+    {
+      "id": 201,
+      "name": "MacBook Air M2",
+      "shortname": "mbam2",
+      "description": "Тонкий, легкий та дуже потужний.",
+      "price": "38000 грн"
+    },
+    {
+      "id": 202,
+      "name": "ASUS ROG Zephyrus",
+      "shortname": "rog",
+      "description": "Ігровий монстр з RTX 4070.",
+      "price": "65000 грн"
+    }
+  ]
+}
