@@ -1,20 +1,5 @@
 [
-  {
-    "id": 1,
-    "name": "Смартфони",
-    "shortname": "phones",
-    "notes": "Найновіші моделі Apple, Samsung та Xiaomi."
-  },
-  {
-    "id": 2,
-    "name": "Ноутбуки",
-    "shortname": "laptops",
-    "notes": "Потужні рішення для роботи та геймінгу."
-  },
-  {
-    "id": 3,
-    "name": "Аксесуари",
-    "shortname": "accessories",
-    "notes": "Навушники, чохли та зарядні пристрої."
-  }
+  { "id": 1, "name": "Фентезі", "shortname": "fantasy", "notes": "Світи магії та пригод." },
+  { "id": 2, "name": "Детективи", "shortname": "detective", "notes": "Загадки, що потребують розв'язання." },
+  { "id": 3, "name": "Наукова фантастика", "shortname": "scifi", "notes": "Технології майбутнього." }
 ]
