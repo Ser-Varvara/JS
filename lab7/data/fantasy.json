@@ -1,0 +1,12 @@
+{
+  "category_name": "Фентезі",
+  "items": [
+    {
+      "id": 1,
+      "name": "Відьмак",
+      "shortname": "witcher",
+      "description": "Історія про Геральта з Рівії.",
+      "price": 350
+    }
+  ]
+}
