@@ -4,6 +4,7 @@
     {
       "id": 301,
       "name": "Дюна",
+      "image_url": "https://vivat.com.ua/product/diuna/"
       "shortname": "dune",
       "description": "Боротьба за пустельну планету Арракіс та її ресурси.",
       "price": 550
@@ -11,6 +12,7 @@
     {
       "id": 302,
       "name": "Марсіянин",
+      "image_url": "https://readeat.com/product/208134-marsiyanyn"
       "shortname": "martian",
       "description": "Історія виживання астронавта на самоті на Марсі.",
       "price": 390
@@ -18,6 +20,7 @@
     {
       "id": 304,
       "name": "Я, робот",
+      "image_url": "https://www.livelib.ru/book/1002965173-ya-robot-ajzek-azimov"
       "shortname": "i_robot",
       "description": "Збірка оповідань про три закони робототехніки.",
       "price": 300
