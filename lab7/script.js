@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Функція для завантаження категорій
     function loadCategories() {
-        fetch('data/categories.json')
+        fetch('./data/categories.json')
             .then(res => res.json())
             .then(categories => {
                 let html = '<h2 class="mb-4">Оберіть категорію:</h2><div class="list-group">';
@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Функція для завантаження книг конкретної категорії
     window.loadBooks = function(shortname) {
-        fetch(`data/${shortname}.json`)
+        fetch(`./data/${shortname}.json`)
             .then(res => res.json())
             .then(data => {
                 let html = `<h2 class="mb-4">Жанр: ${data.category_name}</h2><div class="row">`;
@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Випадковий вибір категорії
     window.loadRandomCategory = function() {
-        fetch('data/categories.json')
+        fetch('./data/categories.json')
             .then(res => res.json())
             .then(categories => {
                 const randomIndex = Math.floor(Math.random() * categories.length);
