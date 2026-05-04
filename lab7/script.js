@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             </div>
                         </div>`;
                 });
-                html += '</div><button class="btn btn-secondary mt-3" onclick="location.reload()">Назад</button>';
+                html += '</div><button class="btn btn-secondary mt-3 mb-5" onclick="location.reload()">Назад</button>';
                 mainContent.innerHTML = html;
             });
     };
