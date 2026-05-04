@@ -1,0 +1,38 @@
+body { font-family: sans-serif; margin: 0; overflow-x: hidden; }
+
+/* Навігація */
+.navbar { background: #333; padding: 1rem; color: white; position: relative; }
+.nav-menu { list-style: none; display: flex; gap: 20px; transition: max-height 0.3s ease-out; }
+.nav-menu a { color: white; text-decoration: none; }
+
+.hamburger { display: none; background: none; border: none; color: white; font-size: 2rem; cursor: pointer; }
+
+/* Карусель */
+.carousel-container { position: relative; width: 80%; margin: 20px auto; overflow: hidden; border: 2px solid #ddd; }
+.carousel-slide { display: flex; transition: transform 0.5s ease-in-out; }
+.carousel-slide img { width: 100%; flex-shrink: 0; }
+
+.prev, .next { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; padding: 10px; cursor: pointer; }
+.next { right: 0; }
+.dots-container { text-align: center; margin-top: 10px; }
+.dot { height: 12px; width: 12px; margin: 0 5px; background-color: #bbb; border-radius: 50%; display: inline-block; cursor: pointer; }
+.active { background-color: #717171; }
+
+/* Адаптивність (Медіа-запити) */
+@media (max-width: 767px) {
+    .hamburger { display: block; }
+    .nav-menu { display: none; flex-direction: column; width: 100%; overflow: hidden; }
+    .nav-menu.active { display: flex; animation: slideDown 0.4s ease forwards; }
+    .large-only { display: none; }
+    .medium-only { display: block; }
+}
+
+@media (min-width: 768px) {
+    .large-only { display: block; }
+    .medium-only { display: none; }
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
