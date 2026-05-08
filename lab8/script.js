@@ -1,4 +1,3 @@
-// 1. Бургер-меню
 const hamburger = document.getElementById('hamburger');
 const navMenu = document.getElementById('nav-menu');
 
@@ -6,7 +5,6 @@ hamburger.addEventListener('click', () => {
     navMenu.classList.toggle('active');
 });
 
-// 2. Карусель
 const slide = document.getElementById('carousel-slide');
 const images = document.querySelectorAll('#carousel-slide img');
 const prevBtn = document.getElementById('prevBtn');
@@ -14,9 +12,8 @@ const nextBtn = document.getElementById('nextBtn');
 const dotsContainer = document.getElementById('dots-container');
 
 let counter = 0;
-const size = 100; // у відсотках
+const size = 100;
 
-// Створення індикаторів (крапок)
 images.forEach((_, idx) => {
     const dot = document.createElement('span');
     dot.classList.add('dot');
@@ -47,7 +44,6 @@ prevBtn.addEventListener('click', () => {
     goToSlide(counter);
 });
 
-// Автоматична зміна слайдів
 setInterval(() => {
     nextBtn.click();
 }, 5000);
